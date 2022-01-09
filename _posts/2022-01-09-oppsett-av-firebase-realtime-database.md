@@ -1,8 +1,9 @@
+---
 layout: post
 title: "Oppsett av Firebase Realtime Database"
 date: 2022-01-09 23:48:00 +0100
 categories: database firebase
-
+---
 <p>I denne guiden skal du lære å sette opp <em>Firebase Realtime Database</em>. Firebase er et produkt fra Google som gjør det enkelt å koble en database til en nettside eller app, slik at man kan lagre info og innstillinger over lengre tid.</p>
 
 <h1 id="kom-i-gang-med-firebase">Kom i gang med Firebase</h1>
