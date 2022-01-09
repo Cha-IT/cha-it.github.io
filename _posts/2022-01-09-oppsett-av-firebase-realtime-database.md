@@ -89,4 +89,3 @@ Du kan legge inn data i databasen direkte om du ønsker det. Firebase er en NoSQ
 <h1 id="neste-steg">Neste steg</h1>
 <p>Firebase Realtime Database er nå klar til bruk på nettsiden din. Neste leksjon handler om hvordan du kan lagre og hente ut data fra nettsiden.</p>
 
-  </div>
