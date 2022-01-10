@@ -23,4 +23,33 @@ På bildet ser du oppbyggingen av en Firebase-database med elevdata:<br>
 Som du kan se på bildet har noen av elevene ulik info. Noen har telefon, andre har epost, og noen har begge deler. Dette ville ikke vært mulig i en SQL-database, der alle feltene må være opprettet på forhånd. Dette viser noe av fleksibiliteten i en NoSQL-database.
 
 ## Legge inn data i databasen
-Du skal nå legge inn dataen fra bildet over i Firebase-databasen din. Åpne html-fila _index.html_ som du opprettet i forrige leksjon. `<script>`
+Du skal nå legge inn dataen fra bildet over i Firebase-databasen din. Åpne html-fila _index.html_ som du opprettet i forrige leksjon. Scriptet i _index.html_ skal se omtrent slik ut:
+
+```javascript
+//Ord på formatet _ALL_CAPS_ tilsvarer unike verdier for databasen din
+const firebaseConfig = {
+  apiKey: "_API_KEY_",
+  authDomain: "_PROJECT_ID_.firebaseapp.com",
+  projectId: "_PROJECT_ID_",
+  storageBucket: "_PROJECT_ID_.appspot.com",
+  messagingSenderId: "_SENDER_ID_",
+  appId: "_APP_ID_",
+  databaseURL: "https://_PROJECT_ID_-default-rtdb._LOCATION_.firebasedatabase.app/"
+};
+// Starter Firebase-appen med de angitte innstillingene
+const app = initializeApp(firebaseConfig);
+// Henter ut databasen fra Firebase-appen og lagrer den som et objekt vi kan bruke i JavaScript
+const db = getDatabase(app);
+```
+
+Du skal nå skrive kode for å opprette nye elementer i databasen. Til dette bruker vi Firebase-funksjonene [`set`](https://firebase.google.com/docs/reference/js/database.md#set) og [`ref`](https://firebase.google.com/docs/reference/js/database.md#ref). `set`er en funksjon for å skrive data til databasen. Denne funksjonen tar inn to parametere; hvor dataen skal skrives til og hvilken data som skal skrives. `ref` brukes derfor inne i `set`, for å angi riktig database (`db`), og hvilket _dokument_ inne i databasen som skal skrives til. Et dokument i NoSQL-databaser tilsvarer omtrent en tabell i relasjonsdatabaser. Koden for å legge inn en elev blir derfor slik:
+
+```javascript
+//Legger inn en ny elev i dokumentet "elever" med id=1
+set(ref(db, "elever/1"), {
+  etternavn: "Thomasen",
+  fornavn: "Rebecca",
+  epost: "",
+  telefon: "12345678"
+});
+```
