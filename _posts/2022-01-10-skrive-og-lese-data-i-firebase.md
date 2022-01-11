@@ -9,7 +9,9 @@ categories: database firebase
 I [forrige leksjon](2022-01-09-oppsett-av-firebase-realtime-database.md) opprettet du en Firebase Realtime Database og la den til en nettside. I denne leksjonen skal du lære hvordan du legger inn data i databasen, og hvordan du henter data ut fra databasen.
 
 ## Forskjellen på relasjonsdatabaser og dokumentbaserte databaser
-Tidligere har du lært å modellere relasjonsdatabaser, og å kode dem i SQL. En viktig forskjell på _relasjonsdatabaser_, eller _SQL-baserte_ databaser, og _dokumentbaserte databaser_, eller _NoSQL-databaser_, er at i NoSQL-databaser er det ingen forhåndsbestemte regler for hvordan databasen skal bygges opp. Hele databasen tar utgangspunkt i et dokument, der man legger all dataen inn, uten å ha bestemt felter, rader og kolonner på forhånd. Man skriver rett og slett bare all dataen inn i dokumentet. Dette gjør NoSQL-databaser veldig fleksible og enkle å sette opp, men det krever også mer orden fra de som skal bruke databasen, og for at en slik database skal være bukervennlig krever det at programmet eller nettsiden man bruker til å aksessere databasen er satt opp på en måte som gjør det enklere å legge inn riktig data.
+Tidligere har du lært å modellere relasjonsdatabaser, og å kode dem i SQL. En viktig forskjell på _relasjonsdatabaser_, eller _SQL-baserte_ databaser, og _dokumentbaserte databaser_, eller _NoSQL-databaser_, er at i NoSQL-databaser er det ingen forhåndsbestemte regler for hvordan databasen skal bygges opp. Hele databasen tar utgangspunkt i en tekstfil (ofte en .JSON-fil), der man legger all dataen inn, uten å ha bestemt felter, rader og kolonner på forhånd. Man skriver rett og slett bare all dataen inn i tekstfilen. Dette gjør NoSQL-databaser veldig fleksible og enkle å sette opp, men det krever også mer orden fra de som skal bruke databasen, og for at en slik database skal være bukervennlig krever det at programmet eller nettsiden man bruker til å aksessere databasen er satt opp på en måte som gjør det enklere å legge inn riktig data.
+
+Vi kan likevel trekke ut noen likheter mellom relasjonsdatabaser (SQL) og dokumentbaserte databaser (NoSQL). En _tabell_ i SQL tilsvarer en _samling_ i NoSQL, og en _rad_ (all dataen tilknyttet et objekt i databasen) i SQL tilsvarer et _dokument_ i NoSQL. Du kan lese mer om oppbyggingen av dokumentbaserte databaser [hos MongoDB (mongodb.com)](https://www.mongodb.com/document-databases).
 
 ### Trenger vi datamodellering med dokumentbaserte databaser?
 
@@ -26,15 +28,23 @@ Som du kan se på bildet har noen av elevene ulik info. Noen har telefon, andre 
 Du skal nå legge inn dataen fra bildet over i Firebase-databasen din. Åpne html-fila _index.html_ som du opprettet i forrige leksjon. Scriptet i _index.html_ skal se omtrent slik ut:
 
 ```javascript
-//Ord på formatet _ALL_CAPS_ tilsvarer unike verdier for databasen din
+// Importerer funksjonen 'initializeApp' fra SDK-pakken 'firebase-app.js'. Pass på at du bruker fullstendig URL med 'https://'
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js";
+// Legger til funksjonene vi skal bruke fra SDK-pakken 'firebase-database.js'. Pass på at du bruker fullstendig URL med 'https://'
+// Du kan legge inn flere funksjoner i { } etterhvert som du bruker flere databasefunksjoner.
+// Om du trenger flere SDK-pakker kan du finne dem på https://firebase.google.com/docs/web/learn-more#libraries-cdn
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-database.js";
+
+// Konfigurerer Firebase-appen din
+//Ord på formatet _ALL_CAPS tilsvarer unike verdier for databasen din
 const firebaseConfig = {
-  apiKey: "_API_KEY_",
-  authDomain: "_PROJECT_ID_.firebaseapp.com",
-  projectId: "_PROJECT_ID_",
-  storageBucket: "_PROJECT_ID_.appspot.com",
-  messagingSenderId: "_SENDER_ID_",
-  appId: "_APP_ID_",
-  databaseURL: "https://_PROJECT_ID_-default-rtdb._LOCATION_.firebasedatabase.app/"
+  apiKey: "_API_KEY",
+  authDomain: "_PROJECT_ID.firebaseapp.com",
+  projectId: "_PROJECT_ID",
+  storageBucket: "_PROJECT_ID.appspot.com",
+  messagingSenderId: "_SENDER_ID",
+  appId: "_APP_ID",
+  databaseURL: "https://_PROJECT_ID-default-rtdb._LOCATION.firebasedatabase.app/"
 };
 // Starter Firebase-appen med de angitte innstillingene
 const app = initializeApp(firebaseConfig);
@@ -42,10 +52,33 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 ```
 
-Du skal nå skrive kode for å opprette nye elementer i databasen. Til dette bruker vi Firebase-funksjonene [`set`](https://firebase.google.com/docs/reference/js/database.md#set) og [`ref`](https://firebase.google.com/docs/reference/js/database.md#ref). `set`er en funksjon for å skrive data til databasen. Denne funksjonen tar inn to parametere; hvor dataen skal skrives til og hvilken data som skal skrives. `ref` brukes derfor inne i `set`, for å angi riktig database (`db`), og hvilket _dokument_ inne i databasen som skal skrives til. Et dokument i NoSQL-databaser tilsvarer omtrent en tabell i relasjonsdatabaser. Koden for å legge inn en elev blir derfor slik:
+### Funksjonene `set` og `ref`
+Du skal nå skrive kode for å opprette nye elementer i databasen. Til dette bruker vi Firebase-funksjonene `set` og `ref`. 
 
+[`set`](https://firebase.google.com/docs/reference/js/database.md#set) er en funksjon for å skrive data til databasen. Denne funksjonen tar inn to parametere; hvor dataen skal skrives til (databasereferanse) og hvilken data som skal skrives, slik:
 ```javascript
-//Legger inn en ny elev i dokumentet "elever" med id=1
+set(_DATABASEREFERANSE, _DATA)
+```
+Dataen skrives inn på formen
+```javascript
+{
+_FELTNAVN_1: _DATA_1,
+_FELTNAVN_2: _DATA_2
+}
+```
+
+[`ref`](https://firebase.google.com/docs/reference/js/database.md#ref) brukes inne i `set`, for å angi riktig database, og hvilken sti inne i databasen dataen skal skrives til. Et dokument i NoSQL-databaser tilsvarer omtrent en tabell i relasjonsdatabaser. Koden for å legge inn en elev blir derfor slik:
+```javascript
+ref(_DATABASE, _STI_TIL_DOKUMENT)`
+```
+Stien til dokumentet skrives inn på formen
+```javascript
+"_SAMLING/_DOKUMENT_ID"
+```
+
+Nå er du klar til å legge inn en elev i databasen:
+```javascript
+//Legger inn en ny elev i samlingen "elever" med dokumentid=1
 set(ref(db, "elever/1"), {
   etternavn: "Thomasen",
   fornavn: "Rebecca",
