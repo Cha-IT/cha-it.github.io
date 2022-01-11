@@ -91,7 +91,7 @@ Du kan legge inn data i databasen direkte om du ønsker det. Firebase er en NoSQ
 
 # Kontroller koden din
 Sjekk at koden din er lik som koden under, men med dine unike verdier i `firebaseconfig`.
-```javascript
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -127,6 +127,7 @@ Sjekk at koden din er lik som koden under, men med dine unike verdier i `firebas
   const app = initializeApp(firebaseConfig);
   // Henter ut databasen fra Firebase-appen og lagrer den som et objekt vi kan bruke i JavaScript
   const db = getDatabase(app);
+
 </script>
 </body>
 </html>
