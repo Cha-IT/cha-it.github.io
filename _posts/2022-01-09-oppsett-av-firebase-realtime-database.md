@@ -4,7 +4,7 @@ title: "Oppsett av Firebase Realtime Database"
 date: 2022-01-09 23:48:00 +0100
 categories: database firebase
 ---
-<p>I denne guiden skal du lære å sette opp <em>Firebase Realtime Database</em>. Firebase er et produkt fra Google som gjør det enkelt å koble en database til en nettside eller app, slik at man kan lagre info og innstillinger over lengre tid.</p>
+<p>I denne guiden skal du lære å sette opp <em>Firebase Realtime Database</em>. Firebase er et produkt fra Google som gjør det enkelt å koble en database til en nettside eller app, slik at man kan lagre info og innstillinger over lengre tid. Firebase er en enkel måte å sette opp databaser på, da det ikke krever noe serverside-script eller egen databaseserver.</p>
 
 <h1 id="kom-i-gang-med-firebase">Kom i gang med Firebase</h1>
 <p><img src="/img/fb-get-started.png" alt="Skjermbilde av forsiden på firebase.google.com"></p>
@@ -89,6 +89,48 @@ Du kan legge inn data i databasen direkte om du ønsker det. Firebase er en NoSQ
   </li>
 </ol>
 
-<h1 id="neste-steg">Neste steg</h1>
-<p>Firebase Realtime Database er nå klar til bruk på nettsiden din. Neste leksjon handler om hvordan du kan lagre og hente ut data fra nettsiden.</p>
+# Kontroller koden din
+Sjekk at koden din er lik som koden under, men med dine unike verdier i `firebaseconfig`.
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script type="module">
+  // ^Pass på at du har med 'type="module"' i script-taggen din. Ellers vil ikke 'import' fungere.
+  
+  // Importerer funksjonen 'initializeApp' fra SDK-pakken 'firebase-app.js'. Pass på at du bruker fullstendig URL med 'https://'
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js";
+  // Legger til funksjonene vi skal bruke fra SDK-pakken 'firebase-database.js'. Pass på at du bruker fullstendig URL med 'https://'
+  // Du kan legge inn flere funksjoner i { } etterhvert som du bruker flere databasefunksjoner.
+  // Om du trenger flere SDK-pakker kan du finne dem på https://firebase.google.com/docs/web/learn-more#libraries-cdn
+  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-database.js";
+
+  // Konfigurerer Firebase-appen din
+  //Ord på formatet _ALL_CAPS_ tilsvarer unike verdier for databasen din
+  const firebaseConfig = {
+    apiKey: "_API_KEY_",
+    authDomain: "_PROJECT_ID_.firebaseapp.com",
+    projectId: "_PROJECT_ID_",
+    storageBucket: "_PROJECT_ID_.appspot.com",
+    messagingSenderId: "_SENDER_ID_",
+    appId: "_APP_ID_",
+    databaseURL: "https://_PROJECT_ID_-default-rtdb._LOCATION_.firebasedatabase.app/"
+  };
+
+  // Starter Firebase-appen med de angitte innstillingene
+  const app = initializeApp(firebaseConfig);
+  // Henter ut databasen fra Firebase-appen og lagrer den som et objekt vi kan bruke i JavaScript
+  const db = getDatabase(app);
+</script>
+</body>
+</html>
+```
+
+<p>Firebase Realtime Database er nå klar til bruk på nettsiden din, og nettsiden kan nå kommunisere direkte med databasen. </p>
 
