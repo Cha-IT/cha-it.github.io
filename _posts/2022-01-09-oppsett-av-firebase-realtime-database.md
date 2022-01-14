@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Oppsett av Firebase Realtime Database"
+title: "Oppsett av Firebase Realtime Database (UTGÅTT)"
 date: 2022-01-09 23:48:00 +0100
 categories: database firebase
 ---
