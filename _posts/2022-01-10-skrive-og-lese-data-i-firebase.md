@@ -9,9 +9,9 @@ categories: database firebase
 I [forrige leksjon](2022-01-09-oppsett-av-firebase-realtime-database.md) opprettet du en Firebase Realtime Database og la den til en nettside. I denne leksjonen skal du lære hvordan du legger inn data i databasen, og hvordan du henter data ut fra databasen.
 
 ## Forskjellen på relasjonsdatabaser og dokumentbaserte databaser
-Tidligere har du lært å modellere relasjonsdatabaser, og å kode dem i SQL. En viktig forskjell på _relasjonsdatabaser_, eller _SQL-baserte_ databaser, og _dokumentbaserte databaser_, eller _NoSQL-databaser_, er at i NoSQL-databaser er det ingen forhåndsbestemte regler for hvordan databasen skal bygges opp. Hele databasen tar utgangspunkt i en tekstfil (ofte en .JSON-fil), der man legger all dataen inn, uten å ha bestemt felter, rader og kolonner på forhånd. Man skriver rett og slett bare all dataen inn i tekstfilen. Dette gjør NoSQL-databaser veldig fleksible og enkle å sette opp, men det krever også mer orden fra de som skal bruke databasen, og for at en slik database skal være bukervennlig krever det at programmet eller nettsiden man bruker til å aksessere databasen er satt opp på en måte som gjør det enklere å legge inn riktig data.
+Tidligere har du lært å modellere relasjonsdatabaser, og å kode dem i SQL. En viktig forskjell på _relasjonsdatabaser_, eller _SQL-baserte databaser_, og _dokumentbaserte databaser_, eller _NoSQL-databaser_, er at i dokumentbaserte databaser er det ingen forhåndsbestemte regler for hvordan databasen skal bygges opp. Hele databasen tar utgangspunkt i en tekstfil (ofte en .JSON-fil), der man legger all dataen inn, uten å ha bestemt felter, rader og kolonner på forhånd. Man skriver rett og slett bare all dataen inn i tekstfilen. Dette gjør dokumentbaserte databaser veldig fleksible og enkle å sette opp, men det krever også mer orden fra de som skal bruke databasen, og for at en slik database skal være brukervennlig krever det at programmet eller nettsiden man bruker til å aksessere databasen er satt opp på en måte som gjør det enklere å legge inn riktig data.
 
-Vi kan likevel trekke ut noen likheter mellom relasjonsdatabaser (SQL) og dokumentbaserte databaser (NoSQL). En _tabell_ i SQL tilsvarer en _samling_ i NoSQL, og en _rad_ (all dataen tilknyttet et objekt i databasen) i SQL tilsvarer et _dokument_ i NoSQL. Du kan lese mer om oppbyggingen av dokumentbaserte databaser [hos MongoDB (mongodb.com)](https://www.mongodb.com/document-databases).
+Vi kan likevel trekke ut noen likheter mellom relasjonsdatabaser (SQL) og dokumentbaserte databaser (NoSQL). En _tabell_ i SQL tilsvarer en _samling (collection)_ i NoSQL, og en _rad_ (all dataen tilknyttet et objekt i databasen) i SQL tilsvarer et _dokument (document)_ i NoSQL. Du kan lese mer om oppbyggingen av dokumentbaserte databaser [hos MongoDB (mongodb.com)](https://www.mongodb.com/document-databases).
 
 ### Trenger vi datamodellering med dokumentbaserte databaser?
 
@@ -67,7 +67,7 @@ _FELTNAVN_2: _DATA_2
 }
 ```
 
-[`ref`](https://firebase.google.com/docs/reference/js/database.md#ref) brukes inne i `set`, for å angi riktig database, og hvilken sti inne i databasen dataen skal skrives til. Et dokument i NoSQL-databaser tilsvarer omtrent en tabell i relasjonsdatabaser. Koden for å legge inn en elev blir derfor slik:
+[`ref`](https://firebase.google.com/docs/reference/js/database.md#ref) brukes inne i `set`, for å angi databasereferansen, altså hvilken database som skal brukes, og hvilken sti inne i databasen dataen skal skrives til. Stien angir hvilken samling og dokument som skal skrives til. En samling i dokumentbaserte-databaser tilsvarer som sagt omtrent en tabell i relasjonsdatabaser, og et dokument tilsvarer en rad. Koden for å lage en referanse til en elev blir derfor slik:
 ```javascript
 ref(_DATABASE, _STI_TIL_DOKUMENT)`
 ```
@@ -76,13 +76,16 @@ Stien til dokumentet skrives inn på formen
 "_SAMLING/_DOKUMENT_ID"
 ```
 
-Nå er du klar til å legge inn en elev i databasen:
+## Opprette et dokument i databasen
+Nå er du klar til å legge inn den første eleven i databasen:
 ```javascript
-//Legger inn en ny elev i samlingen "elever" med dokumentid=1
-set(ref(db, "elever/1"), {
+//Legger inn et nytt dokument i samlingen "elever" med dokumentid=1.
+set(ref(db, "elever/0"), {
   etternavn: "Thomasen",
   fornavn: "Rebecca",
   epost: "",
   telefon: "12345678"
 });
 ```
+Hvis id-en (1) finnes fra før vil dokumentet bli overskrevet. Hvis det ikke finnes fra før opprettes et nytt dokument med denne id-en.
+
