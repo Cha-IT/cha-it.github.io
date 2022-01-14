@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Oppsett av Firebase og Cloud Firestore"
-date: 2022-01-09 23:48:00 +0100
+date: 2022-01-14 11:33:00 +0100
 categories: database firebase
 ---
 I denne guiden skal du lære å sette opp _Firebase_ og _Cloud Firestore_. Firebase er et produkt fra Google som gjør det enkelt å koble en database til en nettside eller app, slik at man kan lagre info og innstillinger over lengre tid. Firebase er en enkel måte å sette opp databaser på, da det ikke krever noe serverside-script eller egen databaseserver.
@@ -48,43 +48,37 @@ I denne guiden skal du lære å sette opp _Firebase_ og _Cloud Firestore_. Fireb
 <h1 id="legg-til-en-database">Legg til en Firestore-database</h1>
 <p><img src="/img/fb-choose-a-product.png" alt="Skjermbilde av Firebase-konsollen"></p>
 
-<p>Du skal nå legge til Cloud Firestore i prosjektet ditt. Trykk på <strong>Cloud Firestore</strong>.<br>
-
-
-<p>Trykk på ikonet, og trykk deretter på <strong>Create database</strong>. Du må nå gjøre to valg:</p>
+<p>Du skal nå legge til Cloud Firestore i prosjektet ditt. Trykk på <strong>Cloud Firestore</strong>, og trykk deretter på <strong>Create database</strong>. Du må nå gjøre to valg:</p>
 <ol>
   <li>Hvem skal ha lese- og skriverettigheter til databasen din? For enkelthets skyld velger vi <strong>Start in test mode</strong>, som gir både lese- og skrivetilgang til alle som har tilgang på koden til databasen din. Dette kan du endre senere, og du må endre det innen 30 dager.</li>
   <li>Hvor skal databasen din lagres? Her velger du <strong>eur3 (europe-west)</strong>. Da vil databasen din bli lagret i Vest-Europa, som er en fordel, både fordi det er fysisk nært Norge, og fordi landene i Vest-Europa følger EUs personverndirektiv GDPR, som er det samme direktivet som vi følger i Norge.</li>
 </ol>
 
-<p>Nå har du opprettet databasen din.<br>
-<img src="/img/fs-database-view-empty.png" alt="Skjermbilde av databasen"><br>
-Du kan legge inn data i databasen direkte om du ønsker det. Firestore er en dokumentbasert database, eller NoSQL-database. Denne typen database er mye mindre streng på hva slags data som kan lagres i databasen. Man lager ikke tabeller, felter og datatyper på forhånd som i SQL, men man legger data inn direkte som objekter (dokumenter). Metadata legges inn på hvert dokument individualt, slik at hvert dokument kan ha forskjellig data <em>og</em> metadata. Man er derfor mer avhengig av hvordan appen som kommuniserer med databasen er bygd opp for å få en oversiktlig database.</p>
+<p>Nå har du opprettet databasen din.</p>
+<img src="/img/fs-database-view-empty.png" alt="Skjermbilde av databasen">
+<p>Du kan legge inn data i databasen direkte om du ønsker det. Firestore er en dokumentbasert database, eller NoSQL-database. Denne typen database er mye mindre streng på hva slags data som kan lagres i databasen. Man lager ikke tabeller, felter og datatyper på forhånd som i SQL, men man legger data inn direkte som objekter (dokumenter). Metadata legges inn på hvert dokument individualt, slik at hvert dokument kan ha forskjellig data <em>og</em> metadata. Man er derfor mer avhengig av hvordan appen som kommuniserer med databasen er bygd opp for å få en oversiktlig database.</p>
 
-<h1 id="legg-inn-databasen-i-websiden-din">Legg inn databasen i websiden din</h1>
-<p>Nå som du har opprettet databasen, må du legge inn databasen i websiden du lagde tidligere. Åpne Visual Studio Code igjen. I koden du kopierte inn tidligere, skal du nå legge til noen linjer.
+# Legg inn databasen i websiden din
+Nå som du har opprettet databasen, må du legge inn databasen i websiden du lagde tidligere. Åpne Visual Studio Code igjen. I koden du kopierte inn tidligere, skal du nå legge til noen linjer.
 
-<p>Du skal legge til tre kodelinjer:</p>
-<ol>
-  <li>Under <code class="language-plaintext highlighter-rouge">// TODO: Add SDKs for Firebase products that you want to use</code> (linje 14 i skjermbildet over), legger du inn denne koden (kopier linja under og lim den inn i html-dokumentet ditt):
+Du skal legge til to kodelinjer:
+
+1. Under `// TODO: Add SDKs for Firebase products that you want to use` (linje 14 i skjermbildet over), legger du inn denne koden (kopier linja under og lim den inn i html-dokumentet ditt):
  
 ```javascript
 import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
 ```
-  </li>
-  
-  NB! Pass på at versjonsnummeret i URL-en (9.6.3) er det samme som versjonsnummeret fra koden du kopierte når du satte opp web-appen din.
-  
-  
-  <li>Nederst i scriptet, legger du inn denne koden (kopier linja under og lim den inn i html-dokumentet ditt):
+
+NB! Pass på at versjonsnummeret i URL-en (9.6.3) er det samme som versjonsnummeret fra koden du kopierte når du satte opp web-appen din.
+
+2. Nederst i scriptet, legger du inn denne koden (kopier linja under og lim den inn i html-dokumentet ditt):
     
     
 ```javascript
 const db = getFirestore();
 ```
     
-  </li>
-</ol>
+
 
 # Kontroller koden din
 Sjekk at koden din er lik som koden under, men med dine unike verdier i `firebaseconfig`.
@@ -125,4 +119,4 @@ Sjekk at koden din er lik som koden under, men med dine unike verdier i `firebas
 </html>
 ```
 
-<p> Cloud Firestore er nå klar til bruk på nettsiden din, og nettsiden kan nå kommunisere direkte med databasen. </p>
+Cloud Firestore er nå klar til bruk på nettsiden din, og nettsiden kan nå kommunisere direkte med databasen.
