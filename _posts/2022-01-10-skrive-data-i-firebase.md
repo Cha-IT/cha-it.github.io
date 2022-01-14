@@ -1,10 +1,9 @@
 ---
 layout: post
-title: "Skrive og lese data i Firebase Realtime Database"
+title: "Skrive data i Firebase Realtime Database (UTGÅTT)"
 date: 2022-01-10 23:48:00 +0100
 categories: database firebase
 ---
-(Under arbeid: Denne posten er ikke skrevet ferdig enda)
 
 I [forrige leksjon](2022-01-09-oppsett-av-firebase-realtime-database.md) opprettet du en Firebase Realtime Database og la den til en nettside. I denne leksjonen skal du lære hvordan du legger inn data i databasen, og hvordan du henter data ut fra databasen.
 
