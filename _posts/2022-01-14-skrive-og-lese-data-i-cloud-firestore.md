@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Skrive og lese data i Cloud Firestore"
-date: 2022-01-10 23:48:00 +0100
+date: 2022-01-16 22:49:00 +0100
 categories: database firebase
 ---
 (Dette dokumentet er ikke helt ferdig, men er godt underveis)
@@ -9,7 +9,7 @@ categories: database firebase
 
 I [forrige leksjon](2022-01-14-oppsett-av-cloud-firestore.md) opprettet du en Firestore-database og la den til en nettside. I denne leksjonen skal du lære hvordan du legger inn data i databasen, og hvordan du henter data ut fra databasen.
 
-# Forskjellen på relasjonsdatabaser og dokumentbaserte databaser
+## Forskjellen på relasjonsdatabaser og dokumentbaserte databaser
 Tidligere har du lært å modellere relasjonsdatabaser, og å kode dem i SQL. En viktig forskjell på _relasjonsdatabaser_, eller _SQL-baserte databaser_, og _dokumentbaserte databaser_, eller _NoSQL-databaser_, er at i dokumentbaserte databaser er det ingen forhåndsbestemte regler for hvordan databasen skal bygges opp. Hele databasen tar utgangspunkt i en tekstfil (ofte en .JSON-fil), der man legger all dataen inn, uten å ha bestemt felter, rader og kolonner på forhånd. Man skriver rett og slett bare all dataen inn i tekstfilen. Dette gjør dokumentbaserte databaser veldig fleksible og enkle å sette opp, men det krever også mer orden fra de som skal bruke databasen, og for at en slik database skal være brukervennlig krever det at programmet eller nettsiden man bruker til å aksessere databasen er satt opp på en måte som gjør det enklere å legge inn riktig data.
 
 Vi kan likevel trekke ut noen likheter mellom relasjonsdatabaser (SQL) og dokumentbaserte databaser (NoSQL). En _tabell_ i SQL tilsvarer en _samling (collection)_ i NoSQL, og en _rad_ (all dataen tilknyttet et objekt i databasen) i SQL tilsvarer et _dokument (document)_ i NoSQL. Du kan lese mer om oppbyggingen av dokumentbaserte databaser [hos MongoDB (mongodb.com)](https://www.mongodb.com/document-databases).
@@ -29,7 +29,7 @@ På bildene under ser du oppbyggingen av en Firestore-database med elevdata:<br>
 
 Som du kan se på bildene har noen av elevene ulik info. Noen har telefon, andre har epost, og noen har begge deler. Dette ville ikke vært mulig i en SQL-database, der alle feltene må være opprettet på forhånd. Dette viser noe av fleksibiliteten i en NoSQL-database.
 
-# Legge inn data i databasen
+## Legge inn data i databasen
 Du skal nå legge inn dataen fra bildet over i Firebase-databasen din. Åpne html-fila _index.html_ som du opprettet i forrige leksjon. Scriptet i _index.html_ skal se omtrent slik ut:
 
 ```html
@@ -58,7 +58,7 @@ Du skal nå legge inn dataen fra bildet over i Firebase-databasen din. Åpne htm
 </script>
 ```
 
-## Opprette et nytt dokument i databasen med addDoc()
+### Opprette et nytt dokument i databasen med addDoc()
 Du skal nå skrive kode for å opprette et nytt dokument i databasen. Den enkleste måten å gjøre dette på er å bruke Firestore-funksjonene `addDoc()` og `collection()`. Dokumenter som opprettes med `addDoc()` får automatisk en unik ID (key), så du trenger ikke tenke på at dokumentet må ha en primærnøkkel.
 
 En viktig ting med funksjonene knyttet til Firestore er at de er asynkrone. Det vil si at når en databaseoperasjon skal kjøre, vil programmet fortsette å kjøre neste kodelinje uten å vente på at kommunikasjonen med databasen er fullført. Derfor skriver vi ordet `await` foran disse funksjonene, slik at programmet venter til kommunikasjonen med databasen er fullført, før neste kodelinje kjøres.
@@ -80,7 +80,7 @@ _FELTNAVN_2: _DATA_2
 collection(_DATABASE, _NAVN_PÅ_COLLECTION)`
 ```
 
-### Legge inn en elev i databasen
+#### Legge inn en elev i databasen
 Nå er du klar til å legge inn den første eleven i databasen. Skriv følgende kode nederst i scriptet ditt (husk å bruke koden `await` foran funksjonen som starter kommunikasjon med databasen):
 ```javascript
 //Legger inn et nytt dokument i samlingen "elever".
@@ -94,7 +94,7 @@ Lagre html-dokumentet og åpne det i en nettleser. Åpne _inspiser_-verktøyet f
 ![Skjermbilde av Firestore-databasen](/img/fs-elevliste-eksempel-4.png)
 
 
-## Opprette et nytt dokument i databasen med setDoc()
+### Opprette et nytt dokument i databasen med setDoc()
 `setDoc()` er en annen måte å opprette nye dokumenter i databasen. `setDoc()` gir deg muligheten til å definere en egen primærnøkkel for hvert dokument i databasen, slik at du kan bruke for eksempel brukernavn, epost, eller en egendefinert ID (elevID, kundenummer) som primærnøkkel. `setDoc()` brukes i kombinasjon med `doc()` for å angi hvor dokumentet skal lagres i databasen, og hva som skal være primærnøkkelen.
 
 [`setDoc()`](https://firebase.google.com/docs/reference/js/firestore_.md#setdoc) er en funksjon for å skrive data til en spesifikk ID i databasen. Denne funksjonen tar inn to parametere; hvilket _dokument_ dataen skal skrives til (angitt med _key_ (ID)) og hvilken data som skal skrives, slik:
@@ -114,7 +114,7 @@ _FELTNAVN_2: _DATA_2
 doc(_DATABASE, _NAVN_PÅ_COLLECTION, _KEY)`
 ```
 
-### Legge inn en elev i databasen
+#### Legge inn en elev i databasen
 Nå er du klar til å legge inn en ny elev med egendefinert ID i databasen. Som ID velger vi å lage et brukernavn (3 første bokstaver i etternavn + 2 første bokstaver i fornavn). Skriv følgende kode nederst i scriptet ditt (husk å bruke koden `await` foran funksjonen som starter kommunikasjon med databasen):
 ```javascript
 //Legger inn et nytt dokument i samlingen "elever".
@@ -127,10 +127,10 @@ await setDoc(doc(db, "elever", "nilja"), {
 Lagre html-dokumentet og åpne det i en nettleser. Åpne _inspiser_-verktøyet for å sjekke at du ikke har noen feilmeldinger i konsollen, og se på Firestore-databasen din. Nå skal du finne et nytt dokument med dataen du la inn. Legg merke til at ID-en til dokumentet er det samme som vi anga i koden ("nilja").
 ![Skjermbilde av Firestore-databasen](/img/fs-elevliste-eksempel-5.png)
 
-# Lese data fra databasen
+## Lese data fra databasen
 I likhet med at det fins flere måter å skrive data til databasen, fins det også flere måter å lese fra databasen. Den enkleste er `getDoc()`. 
 
-## Lese ut data fra databasen med getDoc()
+### Lese ut data fra databasen med getDoc()
 `getDoc()` brukes til å hente ut enkeltdokumenter fra databasen, og krever at du vet ID-en til dokumentet du skal hente. I likhet med `setDoc()` bruker `getDoc()` funksjonen `doc()` for å angi hvilket dokument som skal hentes ut.
 
 Koden for å hente ut det siste dokumentet vi lagde blir:
