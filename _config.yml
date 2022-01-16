@@ -31,7 +31,7 @@ twitter_username: kadalsaune
 github_username:  kadalsaune
 
 # Build settings
-theme: minimal
+theme: minima
 plugins:
   - jekyll-feed
 
