@@ -34,14 +34,13 @@ Du skal nå legge inn dataen fra bildet over i Firebase-databasen din. Åpne htm
 
 ```html
 <script type="module">
-  // Import the functions you need from the SDKs you need
+  // Importerer intitalizApp fra Firebase-app SDK
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-  import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
+  // Importerer alle Firestore-funksjonene vi skal bruke. 
+  // Om du får feilmeldingen "ReferenceError: [...] is not defined", kan det være det fordi du har brukt en Firestore-funksjon uten å ha importert den her.
+  import { getFirestore, collection, doc, addDoc, setDoc, getDoc, getDocs, query, where, orderBy, startAt, startAfter, endAt, limit, limitToLast } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
 
-
-  // Your web app's Firebase configuration
+  // Konfigurerer Firebase
   const firebaseConfig = {
     apiKey: "_API_KEY_",
     authDomain: "_PROJECT_ID_.firebaseapp.com",
@@ -51,9 +50,9 @@ Du skal nå legge inn dataen fra bildet over i Firebase-databasen din. Åpne htm
     appId: "_APP_ID_",
   };
 
-  // Initialize Firebase
+  // Starter opp firebase med den angite konfigurasjonen
   const app = initializeApp(firebaseConfig);
-
+  //Henter ut referanse til Firestore-databasen
   const db = getFirestore();
 </script>
 ```
