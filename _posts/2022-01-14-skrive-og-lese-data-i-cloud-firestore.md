@@ -59,7 +59,7 @@ Du skal nå legge inn dataen fra bildet over i Firebase-databasen din. Åpne htm
 ```
 
 ### Opprette et nytt dokument i databasen med addDoc()
-Du skal nå skrive kode for å opprette et nytt dokument i databasen. Den enkleste måten å gjøre dette på er å bruke Firestore-funksjonene `addDoc()` og `collection()`. Dokumenter som opprettes med `addDoc()` får automatisk en unik ID (key), så du trenger ikke tenke på at dokumentet må ha en primærnøkkel.
+Du skal nå skrive kode for å opprette et nytt dokument i databasen. Den enkleste måten å gjøre dette på er å bruke Firestore-funksjonene `addDoc()` og `collection()`. Dokumenter som opprettes med `addDoc()` får automatisk en unik ID, så du trenger ikke tenke på at dokumentet må ha en primærnøkkel.
 
 En viktig ting med funksjonene knyttet til Firestore er at de er asynkrone. Det vil si at når en databaseoperasjon skal kjøre, vil programmet fortsette å kjøre neste kodelinje uten å vente på at kommunikasjonen med databasen er fullført. Derfor skriver vi ordet `await` foran disse funksjonene, slik at programmet venter til kommunikasjonen med databasen er fullført, før neste kodelinje kjøres.
 
@@ -97,7 +97,7 @@ Lagre html-dokumentet og åpne det i en nettleser. Åpne _inspiser_-verktøyet f
 ### Opprette et nytt dokument i databasen med setDoc()
 `setDoc()` er en annen måte å opprette nye dokumenter i databasen. `setDoc()` gir deg muligheten til å definere en egen primærnøkkel for hvert dokument i databasen, slik at du kan bruke for eksempel brukernavn, epost, eller en egendefinert ID (elevID, kundenummer) som primærnøkkel. `setDoc()` brukes i kombinasjon med `doc()` for å angi hvor dokumentet skal lagres i databasen, og hva som skal være primærnøkkelen.
 
-[`setDoc()`](https://firebase.google.com/docs/reference/js/firestore_.md#setdoc) er en funksjon for å skrive data til en spesifikk ID i databasen. Denne funksjonen tar inn to parametere; hvilket _dokument_ dataen skal skrives til (angitt med _key_ (ID)) og hvilken data som skal skrives, slik:
+[`setDoc()`](https://firebase.google.com/docs/reference/js/firestore_.md#setdoc) er en funksjon for å skrive data til en spesifikk ID i databasen. Denne funksjonen tar inn to parametere; hvilket _dokument_ dataen skal skrives til (angitt med ID) og hvilken data som skal skrives, slik:
 ```javascript
 setDoc(_DOCUMENT, _DATA);
 ```
@@ -109,9 +109,9 @@ _FELTNAVN_2: _DATA_2
 }
 ```
 
-[`doc()`](https://firebase.google.com/docs/reference/js/firestore_.md#doc) brukes inne i `setDoc()`, for å angi hvilken database som skal brukes, hvilken samling (collection) inne i databasen dataen skal skrives til, og hvilken ID (key) dokumentet skal ha.  Koden for å lage en referanse til en elev blir derfor slik:
+[`doc()`](https://firebase.google.com/docs/reference/js/firestore_.md#doc) brukes inne i `setDoc()`, for å angi hvilken database som skal brukes, hvilken samling (collection) inne i databasen dataen skal skrives til, og hvilken ID dokumentet skal ha.  Koden for å lage en referanse til en elev blir derfor slik:
 ```javascript
-doc(_DATABASE, _NAVN_PÅ_COLLECTION, _KEY)`
+doc(_DATABASE, _NAVN_PÅ_COLLECTION, _ID)`
 ```
 
 #### Legge inn en elev i databasen
@@ -128,20 +128,49 @@ Lagre html-dokumentet og åpne det i en nettleser. Åpne _inspiser_-verktøyet f
 ![Skjermbilde av Firestore-databasen](/img/fs-elevliste-eksempel-5.png)
 
 ## Lese data fra databasen
-I likhet med at det fins flere måter å skrive data til databasen, fins det også flere måter å lese fra databasen. Den enkleste er `getDoc()`. 
+I likhet med at det fins flere måter å skrive data til databasen, fins det også flere måter å lese fra databasen. De enkleste er `getDoc()` og `getDocs()`. 
 
-### Lese ut data fra databasen med getDoc()
-`getDoc()` brukes til å hente ut enkeltdokumenter fra databasen, og krever at du vet ID-en til dokumentet du skal hente. I likhet med `setDoc()` bruker `getDoc()` funksjonen `doc()` for å angi hvilket dokument som skal hentes ut.
+### Hente ut ett dokument fra databasen med getDoc()
+`getDoc()` brukes til å hente ut enkeltdokumenter fra databasen, og krever at du vet ID-en til dokumentet du skal hente. I likhet med `setDoc()` bruker `getDoc()` funksjonen `doc()` for å angi hvilket dokument som skal hentes ut. `getDoc()` returnerer et databaseobjekt, og derfor må du opprette en variabel for å lagre dataen som hentes ut.
 
 Koden for å hente ut det siste dokumentet vi lagde blir:
 ```javascript
 const docSnap = await getDoc(doc(db, "elever", "nilja"));
 console.log("Document data:", docSnap.data());
 ```
-Når vi henter ut data fra databasen kaller vi det vi henter ut et "snapshot", fordi det representerer et øyeblikksbilde av dataen i det øyeblikket vi henter den ut fra databasen. `const docSnap` i koden over repesenterer et øyeblikksbilde av ett dokument i databasen. `docSnap.data()` henter ut all dataen som er lagret i dokumentet. Om du vil hente ut enkeltdata, kan du angi det slik:
+Når vi henter ut data fra databasen kaller vi det vi henter ut et "snapshot", fordi det representerer et øyeblikksbilde av dataen i det øyeblikket vi henter den ut fra databasen. `const docSnap` i koden over repesenterer et øyeblikksbilde av ett dokument i databasen (docSnap er her kun et variabelnavn, og kan i utgangspunktet være hva som helst, men dette er et eksempel på et beskrivende variabelnavn). `docSnap.data()` henter ut all dataen som er lagret i dokumentet og presenterer det som et objekt. Om du vil hente ut enkeltdata, kan du angi det slik:
 ```javascript
-console.log("Navn:", docSnap.data().fornavn, docSnap.data().etternavn)
+console.log("ID:", docSnap.id); //ID: nilja
+console.log("Navn:", docSnap.data().fornavn, docSnap.data().etternavn); //Navn: Jakob Nilsen
 ```
 Prøv å lime inn denne linja i koden din og se hva som blir skrevet ut i konsollen.
 
-(Fortsettelse følger...)
+### Hente ut alle dokumentene i en samling med getDocs()
+`getDocs()` brukes for å hente ut flere dokumenter på en gang fra databasen. Det kan være enten alle dokumentene i en samling, eller et utvalg basert på gitte kriterier (query). `getDocs()` returnerer en liste (array) med databaseobjekter.
+
+For å hente ut alle dokumentene i en samling bruker vi `collection()` inne i `getDocs()` for å angi hvilken samling vi skal hente dokumentene fra. For å hente ut alle dokumentene i elevlisten blir koden slik:
+```javascript
+const snapshot = await getDocs(collection(db, "elever"));
+snapshot.forEach((doc) => {
+  console.log(doc.data().fornavn, doc.data().etternavn);
+});
+```
+`snapshot.forEach()` er en løkke som kjører en gang for hvert dokument (`doc`) i samlingen. I eksempelet skriver denne løkken ut fornavn og etternavn til alle elevene til konsollen.
+
+### Hente ut utvalgte dokumenter i en samling med query()
+Med `query()` kan vi lage spørringer not databasen. En spørring er en betingelse for å filtrere, begrense eller sortere dataen som skrives ut. For eksempel kan vi hente ut bare elever som er registrert med e-post, eller vi kunne hentet ut bare elever som har matematikk som et av sine fag. For å lage en spørring kan vi buke funksjonene `where()`, `orderBy`, `startAt()`, `startAfter()`, `endAt()`, `limit()` eller `limitToLast()`.
+
+Slik lager du en spørring for å bare hente ut elever som er registrert med e-post:
+```javascript
+query(collection(db, "elever"), where("epost", "!=", "undefined"));
+```
+Betingelsen `where("epost", "!=", "undefined")` betyr at epost skal være ikke lik (!=) "undefined". Det vil si at spørringen utelukker elever som ikke har registrert epost (epost == defined).
+
+Vi skal nå bruke denne spørringen opp mot databasen og skrive ut resultatet:
+```javascript
+const querySnapshot = await getDocs(query(collection(db, "elever"), where("epost", "!=", "undefined")));
+querySnapshot.forEach((doc) => {
+  console.log(doc.data().fornavn, doc.data().etternavn, doc.data().epost);
+});
+```
+`querySnapshot.forEach()` skriver ut alle resultatene av spørringen.
