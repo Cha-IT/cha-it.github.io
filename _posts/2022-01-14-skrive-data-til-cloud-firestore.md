@@ -1,13 +1,11 @@
 ---
 layout: post
-title: "Skrive og lese data i Cloud Firestore"
+title: "Skrive data til Cloud Firestore"
 date: 2022-01-16 22:49:00 +0100
 categories: database firebase
 ---
-(Dette dokumentet er ikke helt ferdig, men er godt underveis)
 
-
-I [forrige leksjon](2022-01-14-oppsett-av-cloud-firestore.md) opprettet du en Firestore-database og la den til en nettside. I denne leksjonen skal du lære hvordan du legger inn data i databasen, og hvordan du henter data ut fra databasen.
+I [forrige leksjon](/database/firebase/2022/01/14/oppsett-av-cloud-firestore.html) opprettet du en Firestore-database og la den til en nettside. I denne leksjonen skal du lære hvordan du legger inn data i databasen, og hvordan du henter data ut fra databasen.
 
 ## Forskjellen på relasjonsdatabaser og dokumentbaserte databaser
 Tidligere har du lært å modellere relasjonsdatabaser, og å kode dem i SQL. En viktig forskjell på _relasjonsdatabaser_, eller _SQL-baserte databaser_, og _dokumentbaserte databaser_, eller _NoSQL-databaser_, er at i dokumentbaserte databaser er det ingen forhåndsbestemte regler for hvordan databasen skal bygges opp. Hele databasen tar utgangspunkt i en tekstfil (ofte en .JSON-fil), der man legger all dataen inn, uten å ha bestemt felter, rader og kolonner på forhånd. Man skriver rett og slett bare all dataen inn i tekstfilen. Dette gjør dokumentbaserte databaser veldig fleksible og enkle å sette opp, men det krever også mer orden fra de som skal bruke databasen, og for at en slik database skal være brukervennlig krever det at programmet eller nettsiden man bruker til å aksessere databasen er satt opp på en måte som gjør det enklere å legge inn riktig data.
@@ -125,51 +123,3 @@ await setDoc(doc(db, "elever", "nilja"), {
 ```
 Lagre html-dokumentet og åpne det i en nettleser. Åpne _inspiser_-verktøyet for å sjekke at du ikke har noen feilmeldinger i konsollen, og se på Firestore-databasen din. Nå skal du finne et nytt dokument med dataen du la inn. Legg merke til at ID-en til dokumentet er det samme som vi anga i koden ("nilja").
 ![Skjermbilde av Firestore-databasen](/img/fs-elevliste-eksempel-5.png)
-
-## Lese data fra databasen
-I likhet med at det fins flere måter å skrive data til databasen, fins det også flere måter å lese fra databasen. De enkleste er `getDoc()` og `getDocs()`. 
-
-### Hente ut ett dokument fra databasen med getDoc()
-`getDoc()` brukes til å hente ut enkeltdokumenter fra databasen, og krever at du vet ID-en til dokumentet du skal hente. I likhet med `setDoc()` bruker `getDoc()` funksjonen `doc()` for å angi hvilket dokument som skal hentes ut. `getDoc()` returnerer et databaseobjekt, og derfor må du opprette en variabel for å lagre dataen som hentes ut.
-
-Koden for å hente ut det siste dokumentet vi lagde blir:
-```javascript
-const docSnap = await getDoc(doc(db, "elever", "nilja"));
-console.log("Document data:", docSnap.data());
-```
-Når vi henter ut data fra databasen kaller vi det vi henter ut et "snapshot", fordi det representerer et øyeblikksbilde av dataen i det øyeblikket vi henter den ut fra databasen. `const docSnap` i koden over repesenterer et øyeblikksbilde av ett dokument i databasen (docSnap er her kun et variabelnavn, og kan i utgangspunktet være hva som helst, men dette er et eksempel på et beskrivende variabelnavn). `docSnap.data()` henter ut all dataen som er lagret i dokumentet og presenterer det som et objekt. Om du vil hente ut enkeltdata, kan du angi det slik:
-```javascript
-console.log("ID:", docSnap.id); //ID: nilja
-console.log("Navn:", docSnap.data().fornavn, docSnap.data().etternavn); //Navn: Jakob Nilsen
-```
-Prøv å lime inn denne linja i koden din og se hva som blir skrevet ut i konsollen.
-
-### Hente ut alle dokumentene i en samling med getDocs()
-`getDocs()` brukes for å hente ut flere dokumenter på en gang fra databasen. Det kan være enten alle dokumentene i en samling, eller et utvalg basert på gitte kriterier (query). `getDocs()` returnerer en liste (array) med databaseobjekter.
-
-For å hente ut alle dokumentene i en samling bruker vi `collection()` inne i `getDocs()` for å angi hvilken samling vi skal hente dokumentene fra. For å hente ut alle dokumentene i elevlisten blir koden slik:
-```javascript
-const snapshot = await getDocs(collection(db, "elever"));
-snapshot.forEach((doc) => {
-  console.log(doc.data().fornavn, doc.data().etternavn);
-});
-```
-`snapshot.forEach()` er en løkke som kjører en gang for hvert dokument (`doc`) i samlingen. I eksempelet skriver denne løkken ut fornavn og etternavn til alle elevene til konsollen.
-
-### Hente ut utvalgte dokumenter i en samling med query()
-Med `query()` kan vi lage spørringer not databasen. En spørring er en betingelse for å filtrere, begrense eller sortere dataen som skrives ut. For eksempel kan vi hente ut bare elever som er registrert med e-post, eller vi kunne hentet ut bare elever som har matematikk som et av sine fag. For å lage en spørring kan vi buke funksjonene `where()`, `orderBy`, `startAt()`, `startAfter()`, `endAt()`, `limit()` eller `limitToLast()`.
-
-Slik lager du en spørring for å bare hente ut elever som er registrert med e-post:
-```javascript
-query(collection(db, "elever"), where("epost", "!=", "undefined"));
-```
-Betingelsen `where("epost", "!=", "undefined")` betyr at epost skal være ikke lik (!=) "undefined". Det vil si at spørringen utelukker elever som ikke har registrert epost (epost == defined).
-
-Vi skal nå bruke denne spørringen opp mot databasen og skrive ut resultatet:
-```javascript
-const querySnapshot = await getDocs(query(collection(db, "elever"), where("epost", "!=", "undefined")));
-querySnapshot.forEach((doc) => {
-  console.log(doc.data().fornavn, doc.data().etternavn, doc.data().epost);
-});
-```
-`querySnapshot.forEach()` skriver ut alle resultatene av spørringen.
