@@ -40,6 +40,32 @@ snapshot.forEach((doc) => {
 `snapshot.forEach()` er en løkke som kjører en gang for hvert dokument (`doc`) i samlingen. I eksempelet skriver denne løkken ut fornavn og etternavn til alle elevene til konsollen.
 ![Skjermbilde av konsoll med utskrift av fornavn og etternavn til alle elever i databasen](/img/fs-lesdata-console-alle-elever.png)
 
+#### Pil-funksjoner (arrow function expressions)
+I eksempelet over med `forEach`-løkken er det brukt en såkalt pil-funksjon. En pil-funksjon fungerer akkurat som en vanlig funksjon, men det er en måte å forkorte hvordan vi skriver en funksjon, slik at koden blir mer kompakt. Pil-funksjonen i eksempelet ser slik ut:
+```javascript
+(doc) => {
+  console.log(doc.data().fornavn, doc.data().etternavn);
+}
+```
+Hvis vi skal skrive denne funksjonen på den vanlige måten, blir det slik:
+```javascript
+function f(doc){
+  console.log(doc.data().fornavn, doc.data().etternavn);
+}
+```
+Når vi bruker pil-funksjoner, fjerner vi altså ordet `function` og funksjonnavnet (`f`), og lar parentesen med eventuelle argumenter som skal inn i funksjonen stå alene, med en pil `=>` mellom argumentet og funksjonens _body_ (det som står mellom krøllparentesene `{}`). Her er et eksempel som viser samme funksjon på standard form og som pil-funksjon.
+```javascript
+//Standard funksjon uten argumenter
+function enFunksjon() {
+  //kode som skal kjøres
+}
+
+//Pil-funksjon uten argumenter
+() => {
+  //kode som skal kjøres
+}
+```
+
 ### Hente ut utvalgte dokumenter i en samling med query()
 Med `query()` kan vi lage spørringer mot databasen. En spørring er en betingelse for å filtrere, begrense eller sortere dataen som skrives ut. Dette fungerer stort sett på samme måte som i SQL. For eksempel kan vi hente ut bare elever som er registrert med e-post, eller vi kunne hentet ut bare elever som har matematikk som et av sine fag. For å lage en spørring kan vi buke funksjonene `where()`, `orderBy()`, `startAt()`, `startAfter()`, `endAt()`, `limit()` eller `limitToLast()`.
 
