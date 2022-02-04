@@ -18,7 +18,7 @@ Koden for å hente ut dokumentet vi lagde for eleven Jakob Nilsen blir:
 const docSnap = await getDoc(doc(db, "elever", "nilja"));
 console.log("Document data:", docSnap.data());
 ```
-![Skjermbilde av konsoll med utskriften "Document data" og data tilhørende eleven Jakob Nilsen](/img/fs-lesdata-console-nilja.png)
+![Skjermbilde av konsoll med utskriften "Document data" og data tilhørende eleven Jakob Nilsen](/img/2022-01-20-lese-data-fra-cloud-firestore/fs-lesdata-console-nilja.png)
 
 Når vi henter ut data fra databasen kaller vi det vi henter ut et "snapshot", fordi det representerer et øyeblikksbilde av dataen i det øyeblikket vi henter den ut fra databasen. `const docSnap` i koden over repesenterer et øyeblikksbilde av ett dokument i databasen (docSnap er her kun et variabelnavn, og kan i utgangspunktet være hva som helst, men dette er et eksempel på et beskrivende variabelnavn). `docSnap.data()` henter ut all dataen som er lagret i dokumentet og presenterer det som et objekt. Om du vil hente ut enkeltdata, kan du angi det slik:
 ```javascript
@@ -38,7 +38,7 @@ snapshot.forEach((doc) => {
 }); 
 ```
 `snapshot.forEach()` er en løkke som kjører en gang for hvert dokument (`doc`) i samlingen. I eksempelet skriver denne løkken ut fornavn og etternavn til alle elevene til konsollen.
-![Skjermbilde av konsoll med utskrift av fornavn og etternavn til alle elever i databasen](/img/fs-lesdata-console-alle-elever.png)
+![Skjermbilde av konsoll med utskrift av fornavn og etternavn til alle elever i databasen](/img/2022-01-20-lese-data-fra-cloud-firestore/fs-lesdata-console-alle-elever.png)
 
 #### Pil-funksjoner (arrow function expressions)
 I eksempelet over med `forEach`-løkken er det brukt en såkalt pil-funksjon. En pil-funksjon fungerer akkurat som en vanlig funksjon, men det er en måte å forkorte hvordan vi skriver en funksjon, slik at koden blir mer kompakt. Pil-funksjonen i eksempelet ser slik ut:
@@ -88,4 +88,4 @@ querySnapshot.forEach((doc) => {
 });
 ```
 `querySnapshot.forEach()` skriver ut alle resultatene av spørringen.
-![Skjermbilde av konsoll med utskrift av fornavn, etternavn og epost til alle elever som er registrert med epost i databasen](/img/fs-lesdata-console-elever-med-epost.png)
+![Skjermbilde av konsoll med utskrift av fornavn, etternavn og epost til alle elever som er registrert med epost i databasen](/img/2022-01-20-lese-data-fra-cloud-firestore/fs-lesdata-console-elever-med-epost.png)
