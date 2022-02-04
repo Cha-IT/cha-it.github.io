@@ -19,11 +19,11 @@ Vi kan likevel trekke ut noen likheter mellom relasjonsdatabaser (SQL) og dokume
 Det kan kanskje være enkelt å tro at vi ikke trenger datamodellering i NoSQL-databaser, siden vi ikke trenger å opprette tabeller og felter på samme måte som i SQL, men det kan uansett være en god ide å ha oversikt over hvordan dataene skal organiseres i databasen, og derfor kan det være lurt å sette opp en datamodell også når du skal bruke NoSQL-databaser.
 
 På bildene under ser du oppbyggingen av en Firestore-database med elevdata:<br>
-![Skjermbilde av Firestore-database med data om elever](/img/fs-elevliste-eksempel-1.png)
+![Skjermbilde av Firestore-database med data om elever](/img/2022-01-14-skrive-data-til-cloud-firestore/fs-elevliste-eksempel-1.png)
 
-![Skjermbilde av Firestore-database med data om elever](/img/fs-elevliste-eksempel-2.png)
+![Skjermbilde av Firestore-database med data om elever](/img/2022-01-14-skrive-data-til-cloud-firestore/fs-elevliste-eksempel-2.png)
 
-![Skjermbilde av Firestore-database med data om elever](/img/fs-elevliste-eksempel-3.png)
+![Skjermbilde av Firestore-database med data om elever](/img/2022-01-14-skrive-data-til-cloud-firestore/fs-elevliste-eksempel-3.png)
 
 Som du kan se på bildene har noen av elevene ulik info. Noen har telefon, andre har epost, og noen har begge deler. Dette ville ikke vært mulig i en SQL-database, der alle feltene må være opprettet på forhånd. Dette viser noe av fleksibiliteten i en NoSQL-database.
 
@@ -88,7 +88,7 @@ await addDoc(collection(db, "elever"), {
 });
 ```
 Lagre html-dokumentet og åpne det i en nettleser. Åpne _inspiser_-verktøyet for å sjekke at du ikke har noen feilmeldinger i konsollen, og se på Firestore-databasen din. Nå skal du finne et nytt dokument med dataen du la inn.
-![Skjermbilde av Firestore-databasen](/img/fs-elevliste-eksempel-4.png)
+![Skjermbilde av Firestore-databasen](/img/2022-01-14-skrive-data-til-cloud-firestore/fs-elevliste-eksempel-4.png)
 
 
 ### Opprette et nytt dokument i databasen med setDoc()
@@ -122,4 +122,4 @@ await setDoc(doc(db, "elever", "nilja"), {
 }):
 ```
 Lagre html-dokumentet og åpne det i en nettleser. Åpne _inspiser_-verktøyet for å sjekke at du ikke har noen feilmeldinger i konsollen, og se på Firestore-databasen din. Nå skal du finne et nytt dokument med dataen du la inn. Legg merke til at ID-en til dokumentet er det samme som vi anga i koden ("nilja").
-![Skjermbilde av Firestore-databasen](/img/fs-elevliste-eksempel-5.png)
+![Skjermbilde av Firestore-databasen](/img/2022-01-14-skrive-data-til-cloud-firestore/fs-elevliste-eksempel-5.png)
