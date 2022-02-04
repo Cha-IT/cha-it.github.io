@@ -7,12 +7,12 @@ categories: database firebase
 I denne guiden skal du lære å sette opp _Firebase_ og _Cloud Firestore_. Firebase er et produkt fra Google som gjør det enkelt å koble en database til en nettside eller app, slik at man kan lagre info og innstillinger over lengre tid. Firebase er en enkel måte å sette opp databaser på, da det ikke krever noe serverside-script eller egen databaseserver.
 
 <h1 id="kom-i-gang-med-firebase">Kom i gang med Firebase</h1>
-<p><img src="/img/fb-get-started.png" alt="Skjermbilde av forsiden på firebase.google.com"></p>
+<p><img src="/img/2022-01-14-oppsett-av-cloud-firestore/fb-get-started.png" alt="Skjermbilde av forsiden på firebase.google.com"></p>
 
 <p>For å bruke Firebase, må du ha en Google-konto. Gå til <strong><a href="https://firebase.google.com/">firebase.google.com</a></strong> og logg på med ditt brukernavn og passord ved å trykke <strong>Logg på</strong> øverst i høyre hjørne, hvis du ikke allerede er innlogget. Når du har logget inn, trykker du på <strong>Get started</strong> eller <strong>Go to console</strong> for å komme i gang med Firebase.</p>
 
 <h1 id="opprett-et-nytt-prosjekt">Opprett et nytt prosjekt</h1>
-<p><img src="/img/fb-create-a-project.png" alt="Skjermbilde av Firebase-konsollen"></p>
+<p><img src="/img/2022-01-14-oppsett-av-cloud-firestore/fb-create-a-project.png" alt="Skjermbilde av Firebase-konsollen"></p>
 
 <p>Du skal nå opprette et nytt prosjekt. Trykk på <strong>Create a project</strong>, og følg instruksjonene. Det er tre steg:</p>
 <ol>
@@ -30,23 +30,23 @@ I denne guiden skal du lære å sette opp _Firebase_ og _Cloud Firestore_. Fireb
 </ol>
 
 <h1 id="legg-til-en-web-app">Legg til en web app</h1>
-<p><img src="/img/fb-project-overview-1.png" alt="Skjermbilde av prosjektoversikten i Firebase"></p>
+<p><img src="/img/2022-01-14-oppsett-av-cloud-firestore/fb-project-overview-1.png" alt="Skjermbilde av prosjektoversikten i Firebase"></p>
 
 <p>Du skal nå legge til en app i prosjektet ditt. Siden vi skal lage en webside, eller web app, trykker du på symbolet <strong>&lt;/&gt;</strong> over teksten <strong>Add an app to get started</strong>. Først må du gi appen din et navn. Gi appen din navnet <strong>Elevliste-web</strong>. Dette navnet brukes bare internt i Firebase-konsollen, for å skille forskjellige apper fra hverandre, så det er ikke viktig at navnet er unikt og spennende. Trykk på <strong>Register app</strong>.</p>
 
 <p>Du får nå opp koden som du skal bruke for å koble Firebase til nettsiden din. Denne koden kalles <strong>SDK</strong>. Trykk på <strong>Use a <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tag</strong> for å få opp riktig kode (vi skal ikke bruke npm i denne guiden). Kopier koden ved å trykke på de to overlappende firkantene nederst til høyre i kodefeltet. NB! Ikke trykk deg videre enda!<br>
-<img src="/img/fb-sdk.png" alt="Skjermbilde av SDK-koden til prosjektet"></p>
+<img src="/img/2022-01-14-oppsett-av-cloud-firestore/fb-sdk.png" alt="Skjermbilde av SDK-koden til prosjektet"></p>
 
 <p>Nå skal du sette denne koden inn i html-filen der du skal bruke Firebase. Åpne <strong>Visual Studio Code</strong> og opprett en ny mappe (<em>Åpne mappe</em> -&gt; <em>Opprett ny mappe</em>). I denne mappen oppretter du en ny fil som du kaller <strong>index.html</strong>. Tast inn <strong>!</strong> (utropstegn) og trykk enter for å få de nødvendige taggene. Inne i <code class="language-plaintext highlighter-rouge">&lt;body&gt;</code>-taggen limer du inn koden du fikk fra Firebase. Husk at denne koden er unik for deg, så deler av koden din vil være ulik skjermbildet.</p>
 
-<p><a href="/img/fb-vscode-sdk.png"><img src="/img/fb-vscode-sdk.png" alt="Skjermbilde av HTML-filen med SDK-koden limt inn"></a><br>(Klikk på skjermbildet for å gjøre teksten større)</p>
+<p><a href="/img/2022-01-14-oppsett-av-cloud-firestore/fb-vscode-sdk.png"><img src="/img/2022-01-14-oppsett-av-cloud-firestore/fb-vscode-sdk.png" alt="Skjermbilde av HTML-filen med SDK-koden limt inn"></a><br>(Klikk på skjermbildet for å gjøre teksten større)</p>
 
 <p>Når du har kopiert inn hele koden, inkludert <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code>-taggene, lagrer du html-filen din og går tilbake til Firebase. Nå kan du trykke på <strong>Continue to console</strong>.</p>
 
 <p>Hvis du trenger å finne igjen denne koden (SDK) senere, finner du den igjen i <strong>Project settings</strong>.</p>
 
 <h1 id="legg-til-en-database">Legg til en Firestore-database</h1>
-<p><img src="/img/fb-choose-a-product.png" alt="Skjermbilde av Firebase-konsollen"></p>
+<p><img src="/img/2022-01-14-oppsett-av-cloud-firestore/fb-choose-a-product.png" alt="Skjermbilde av Firebase-konsollen"></p>
 
 <p>Du skal nå legge til Cloud Firestore i prosjektet ditt. Trykk på <strong>Cloud Firestore</strong>, og trykk deretter på <strong>Create database</strong>. Du må nå gjøre to valg:</p>
 <ol>
@@ -55,7 +55,7 @@ I denne guiden skal du lære å sette opp _Firebase_ og _Cloud Firestore_. Fireb
 </ol>
 
 <p>Nå har du opprettet databasen din.</p>
-<img src="/img/fs-database-view-empty.png" alt="Skjermbilde av databasen">
+<img src="/img/2022-01-14-oppsett-av-cloud-firestore/fs-database-view-empty.png" alt="Skjermbilde av databasen">
 <p>Du kan legge inn data i databasen direkte om du ønsker det. Firestore er en dokumentbasert database, eller NoSQL-database. Denne typen database er mye mindre streng på hva slags data som kan lagres i databasen. Man lager ikke tabeller, felter og datatyper på forhånd som i SQL, men man legger data inn direkte som objekter (dokumenter). Metadata legges inn på hvert dokument individualt, slik at hvert dokument kan ha forskjellig data <em>og</em> metadata. Man er derfor mer avhengig av hvordan appen som kommuniserer med databasen er bygd opp for å få en oversiktlig database.</p>
 
 # Legg inn databasen i websiden din
