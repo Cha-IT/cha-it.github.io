@@ -74,7 +74,7 @@ _FELTNAVN_2: _DATA_2
 
 [`collection()`](https://firebase.google.com/docs/reference/js/firestore_.md#collection_2) brukes inne i `addDoc`, for å angi hvilken database som skal brukes, og hvilken samling (collection) inne i databasen dataen skal skrives til. En samling i dokumentbaserte-databaser tilsvarer som sagt omtrent en tabell i relasjonsdatabaser, og et dokument tilsvarer en rad. Koden for å lage en referanse til en elev blir derfor slik:
 ```javascript
-collection(_DATABASE, _NAVN_PÅ_COLLECTION)`
+collection(_DATABASE, _NAVN_PÅ_COLLECTION)
 ```
 
 #### Legge inn en elev i databasen
@@ -110,6 +110,8 @@ _FELTNAVN_2: _DATA_2
 ```javascript
 doc(_DATABASE, _NAVN_PÅ_COLLECTION, _ID)`
 ```
+Merk at ID-en alltid må være definert som tekst, med anførselstegn. Hvis du ønsker å bruke nummer som ID, må du derfor også skrive tallet i anførselstegn, slik: `"3"`.
+
 
 #### Legge inn en elev i databasen
 Nå er du klar til å legge inn en ny elev med egendefinert ID i databasen. Som ID velger vi å lage et brukernavn (3 første bokstaver i etternavn + 2 første bokstaver i fornavn). Skriv følgende kode nederst i scriptet ditt (husk å bruke koden `await` foran funksjonen som starter kommunikasjon med databasen):
