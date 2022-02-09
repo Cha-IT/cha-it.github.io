@@ -27,6 +27,38 @@ I Firebase kan dette gjøres på nesten samme måte, ved å lage to parallelle s
 
 ![Modell av dokumentdatabase med parallelle samlinger og dokumenter](/img/2022-02-04-organisering-av-data-i-cloud-firestore/dokumentdatabase-modell-elev_fag.jpg)
 
+Forskjellen på dette og en mange-til-mange relasjon i SQL er hvordan spørringer fungerer. I SQL, kunne vi brukt en spørring med JOIN for å hente data fra flere tabeller samtidig. NoSQL har ikke støtte for fremmednøkler og JOIN-operasjoner, så for å hente ut data fra flere tabeller, må vi kjøre flere separate spørringer. I NoSQL kan vi heller ikke definere på forhånd hvilke felter vi vil hente ut, slik som vi kan gjøre i SQL med SELECT.
+
+For å hente ut navn og karakter på alle elever i faget Utvikling (ITK2003), kunne SQL-spørringen sett slik ut:
+```sql
+SELECT Elev.fornavn, Elev.etternavn, Elev_har_Fag.Karakter
+FROM Fag JOIN Elev_har_Fag JOIN Elev
+ON Elev.ElevID = Elev_har_Fag.Elev_ElevID AND Fag.FagID = Elev_har_Fag.Fag_FagID
+WHERE Fag.FagID = "ITK2003";
+```
+
+I Cloud Firestore, må vi lage flere spørringer, slik:
+```javascript
+//Henter all data fra samlingen "Elev_har_Fag" (dvs ElevID, FagID, år og karakter) der FagID er ITK2003, 
+//og lagrer de i arrayen "sporring"
+const sporring = getDocs(query(collection(db, "Elev_har_Fag"), where("FagID", "==", "ITK2003");
+//Oppretter en array for å lagre all data om elever 
+const elevArr = [];
+//Oppretter en (parallell) array for å lagre karakterer
+const karakterArr = [];
+//Kjører en løkke som går gjennom alle dokumenter fra spørringen.
+sporring.forEach((dokument) => {
+  //Henter all data for hver elev og lagrer i arrayen elevArr
+  elevArr.push(getDoc(doc(db, "Elev", dokument.data().ElevID)));
+  //Henter karakteren til hver elev og lagrer i arrayen karakterArr
+  karakterArr.push(dokument.data().karakter);  
+});
+
+//Skriver ut fornavn og etternavn (fra elevArr) og karakter (fra karakterArr) til alle elever
+for(i = 0; i < elevArr.length; i++){
+  console.log(elevArr[i].data().fornavn, elevArr[i].data().etternavn, karakterArr[i];
+}
+```
 
 Her kan du lære mer om organisering av data i Cloud Firestore og i NoSQL-databaser generelt:
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/v_hR4K4auoQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
