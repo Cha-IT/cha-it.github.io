@@ -74,7 +74,7 @@ for(i = 0; i < elevArr.length; i++){
   console.log(elevArr[i].data().fornavn, elevArr[i].data().etternavn, karakterArr[i];
 }
 ```
-
+_(Mer stoff kommer)_
 
 Her kan du lære mer om organisering av data i Cloud Firestore og i NoSQL-databaser generelt:
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/v_hR4K4auoQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
