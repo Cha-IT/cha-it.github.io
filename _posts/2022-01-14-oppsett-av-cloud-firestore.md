@@ -2,7 +2,7 @@
 layout: post
 title: "Oppsett av Firebase og Cloud Firestore"
 date: 2022-01-14 11:33:00 +0100
-categories: database firebase
+categories: database nosql firebase
 ---
 I denne guiden skal du lære å sette opp _Firebase_ og _Cloud Firestore_. Firebase er et produkt fra Google som gjør det enkelt å koble en database til en nettside eller app, slik at man kan lagre info og innstillinger over lengre tid. Firebase er en enkel måte å sette opp databaser på, da det ikke krever noe serverside-script eller egen databaseserver.
 
