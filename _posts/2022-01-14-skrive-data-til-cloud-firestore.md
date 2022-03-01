@@ -36,7 +36,7 @@ Du skal nå legge inn dataen fra bildet over i Firebase-databasen din. Åpne htm
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
   // Importerer alle Firestore-funksjonene vi skal bruke. 
   // Om du får feilmeldingen "ReferenceError: [...] is not defined", kan det være det fordi du har brukt en Firestore-funksjon uten å ha importert den her.
-  import { getFirestore, collection, doc, addDoc, setDoc, getDoc, getDocs, query, where, orderBy, startAt, startAfter, endAt, limit, limitToLast } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
 
   // Konfigurerer Firebase
   const firebaseConfig = {
@@ -62,23 +62,33 @@ En viktig ting med funksjonene knyttet til Firestore er at de er asynkrone. Det 
 
 [`addDoc()`](https://firebase.google.com/docs/reference/js/firestore_.md#adddoc) er en funksjon for å skrive data til databasen. Denne funksjonen tar inn to parametere; hvilken _samling_ (collection) dataen skal skrives til og hvilken data som skal skrives, slik:
 ```javascript
-addDoc(_COLLECTION, _DATA);
+addDoc(_COLLECTION_, _DATA_);
 ```
 Dataen skrives inn på formen
 ```javascript
 {
-_FELTNAVN_1: _DATA_1,
-_FELTNAVN_2: _DATA_2
+_FELTNAVN_1_: "_DATA_1_",
+_FELTNAVN_2_: "_DATA_2_"
 }
 ```
 
 [`collection()`](https://firebase.google.com/docs/reference/js/firestore_.md#collection_2) brukes inne i `addDoc`, for å angi hvilken database som skal brukes, og hvilken samling (collection) inne i databasen dataen skal skrives til. En samling i dokumentbaserte-databaser tilsvarer som sagt omtrent en tabell i relasjonsdatabaser, og et dokument tilsvarer en rad. Koden for å lage en referanse til en elev blir derfor slik:
 ```javascript
-collection(_DATABASE, _NAVN_PÅ_COLLECTION)
+collection(_DATABASE_, "_NAVN_PÅ_COLLECTION_")
 ```
 
+<hr />
+
+#### NB! Husk å importere Firebase-funksjonene
+Alle funksjonene du bruker som er spesielle for Firebase, og ikke generelle Javascript-funksjoner, må importeres. Vi har allerede importert `intializeApp` fra _(...)/firebase-app.js_ og `getFirestore` fra _(...)/firebase-firestore.js_ i koden over. Når vi skal skrive kode videre må vi huske å importere alle funksjoner vi ikke har brukt før fra _firebase-firestore.js_. For å bruke `addDoc()` og `collection()` må vi derfor legge dem inn i import-setningen over, bak `getFirestore`, slik:
+```javascript
+import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
+```
+
+<hr />
+
 #### Legge inn en elev i databasen
-Nå er du klar til å legge inn den første eleven i databasen. Skriv følgende kode nederst i scriptet ditt (husk å bruke koden `await` foran funksjonen som starter kommunikasjon med databasen):
+Nå er du klar til å legge inn den første eleven i databasen. Skriv følgende kode nederst i scriptet ditt (husk å skrive `await` foran funksjonen som starter kommunikasjon med databasen):
 ```javascript
 //Legger inn et nytt dokument i samlingen "elever".
 await addDoc(collection(db, "elever"), {
@@ -96,25 +106,25 @@ Lagre html-dokumentet og åpne det i en nettleser. Åpne _inspiser_-verktøyet f
 
 [`setDoc()`](https://firebase.google.com/docs/reference/js/firestore_.md#setdoc) er en funksjon for å skrive data til en spesifikk ID i databasen. Denne funksjonen tar inn to parametere; hvilket _dokument_ dataen skal skrives til (angitt med ID) og hvilken data som skal skrives, slik:
 ```javascript
-setDoc(_DOCUMENT, _DATA);
+setDoc(_DOCUMENT_, _DATA_);
 ```
 Dataen skrives inn på formen
 ```javascript
 {
-_FELTNAVN_1: _DATA_1,
-_FELTNAVN_2: _DATA_2
+_FELTNAVN_1_: "_DATA_1_",
+_FELTNAVN_2_: "_DATA_2_"
 }
 ```
 
 [`doc()`](https://firebase.google.com/docs/reference/js/firestore_.md#doc) brukes inne i `setDoc()`, for å angi hvilken database som skal brukes, hvilken samling (collection) inne i databasen dataen skal skrives til, og hvilken ID dokumentet skal ha.  Koden for å lage en referanse til en elev blir derfor slik:
 ```javascript
-doc(_DATABASE, _NAVN_PÅ_COLLECTION, _ID)`
+doc(_DATABASE_, "_NAVN_PÅ_COLLECTION_", "_ID_")`
 ```
 Merk at ID-en alltid må være definert som tekst, med anførselstegn. Hvis du ønsker å bruke nummer som ID, må du derfor også skrive tallet i anførselstegn, slik: `"3"`.
 
 
 #### Legge inn en elev i databasen
-Nå er du klar til å legge inn en ny elev med egendefinert ID i databasen. Som ID velger vi å lage et brukernavn (3 første bokstaver i etternavn + 2 første bokstaver i fornavn). Skriv følgende kode nederst i scriptet ditt (husk å bruke koden `await` foran funksjonen som starter kommunikasjon med databasen):
+Nå er du klar til å legge inn en ny elev med egendefinert ID i databasen. Som ID velger vi å lage et brukernavn (3 første bokstaver i etternavn + 2 første bokstaver i fornavn). Importer funksjonene `setDoc` og `doc` fra _firebase-firestore.js_, og skriv følgende kode nederst i scriptet ditt (husk å skrive `await` foran funksjonen som starter kommunikasjon med databasen):
 ```javascript
 //Legger inn et nytt dokument i samlingen "elever".
 await setDoc(doc(db, "elever", "nilja"), {
