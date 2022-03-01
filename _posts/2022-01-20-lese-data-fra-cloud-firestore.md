@@ -7,11 +7,11 @@ categories: database firebase
 
 I [forrige leksjon](/database/firebase/2022/01/16/skrive-data-til-cloud-firestore.html) lærte du hvordan du legger inn data i databasen. I denne leksjonen skal du lære hvordan du henter data ut fra databasen og lager spørringer for å velge hvilke data du vil hente ut.
 
-I denne leksjonen skal vi bruke følgende Firebase-funksjoner:
+I denne leksjonen skal du bruke følgende Firebase-funksjoner:
 
 `collection, doc, addDoc, setDoc, getDoc, getDocs, query, where` 
 
-Pass på å importer disse fra _(...)/firebase-firestore.js_ i koden din (lim inn linja over bak `getFirestore`).
+Pass på å importer disse fra _(...)/firebase-firestore.js_ i koden din (lim inn linja over etter `import { getFirestore,` i koden din).
 
 ## Lese data fra databasen
 I likhet med at det fins flere måter å skrive data til databasen, fins det også flere måter å lese fra databasen. De enkleste er `getDoc()` og `getDocs()`. 
