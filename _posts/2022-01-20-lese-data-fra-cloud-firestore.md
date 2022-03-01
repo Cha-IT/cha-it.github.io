@@ -7,6 +7,12 @@ categories: database firebase
 
 I [forrige leksjon](/database/firebase/2022/01/16/skrive-data-til-cloud-firestore.html) lærte du hvordan du legger inn data i databasen. I denne leksjonen skal du lære hvordan du henter data ut fra databasen og lager spørringer for å velge hvilke data du vil hente ut.
 
+I denne leksjonen skal vi bruke følgende Firebase-funksjoner:
+
+`collection, doc, addDoc, setDoc, getDoc, getDocs, query, where` 
+
+Pass på å importer disse fra _(...)/firebase-firestore.js_ i koden din (lim inn linja over bak `getFirestore`).
+
 ## Lese data fra databasen
 I likhet med at det fins flere måter å skrive data til databasen, fins det også flere måter å lese fra databasen. De enkleste er `getDoc()` og `getDocs()`. 
 
@@ -40,6 +46,8 @@ snapshot.forEach((doc) => {
 `snapshot.forEach()` er en løkke som kjører en gang for hvert dokument (`doc`) i samlingen. I eksempelet skriver denne løkken ut fornavn og etternavn til alle elevene til konsollen.
 ![Skjermbilde av konsoll med utskrift av fornavn og etternavn til alle elever i databasen](/img/2022-01-20-lese-data-fra-cloud-firestore/fs-lesdata-console-alle-elever.png)
 
+<hr />
+
 #### Pil-funksjoner (arrow function expressions)
 I eksempelet over med `forEach`-løkken er det brukt en såkalt pil-funksjon. En pil-funksjon fungerer akkurat som en vanlig funksjon, men det er en måte å forkorte hvordan vi skriver en funksjon, slik at koden blir mer kompakt. Pil-funksjonen i eksempelet ser slik ut:
 ```javascript
@@ -66,10 +74,12 @@ function enFunksjon() {
 }
 ```
 
-### Hente ut utvalgte dokumenter i en samling med query()
-Med `query()` kan vi lage spørringer mot databasen. En spørring er en betingelse for å filtrere, begrense eller sortere dataen som skrives ut. Dette fungerer stort sett på samme måte som i SQL. For eksempel kan vi hente ut bare elever som er registrert med e-post, eller vi kunne hentet ut bare elever som har matematikk som et av sine fag. For å lage en spørring kan vi buke funksjonene `where()`, `orderBy()`, `startAt()`, `startAfter()`, `endAt()`, `limit()` eller `limitToLast()`.
+<hr />
 
-For eksempel kan vi lage en spøring for å hente ut alle elever, sortert på etternavn:
+### Hente ut utvalgte dokumenter i en samling med query()
+Med `query()` kan vi lage spørringer mot databasen. En spørring er en betingelse for å filtrere, begrense eller sortere dataene som skrives ut. Dette fungerer i utgangspunktet på samme måte som i SQL. For eksempel kan vi hente ut bare elever som er registrert med e-post, eller vi kunne hentet ut bare elever som har matematikk som et av sine fag. For å lage en spørring kan vi bruke funksjonene `where()`, `orderBy()`, `startAt()`, `startAfter()`, `endAt()`, `limit()` eller `limitToLast()`.
+
+For eksempel kan vi lage en spørring for å hente ut alle elever, sortert på etternavn:
 ```javascript
 query(collection(db, "elever"), orderBy("etternavn"));
 ```
