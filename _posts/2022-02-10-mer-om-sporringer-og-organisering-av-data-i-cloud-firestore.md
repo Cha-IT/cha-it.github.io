@@ -6,6 +6,14 @@ categories: database firebase
 ---
 _Denne artikkelen er under arbeid. Den vil oppdateres fortløpende med mer info._
 
+I denne leksjonen brukes følgende Firebase-funksjoner:
+
+`collection, doc, addDoc, setDoc, getDoc, getDocs, query, where` 
+
+Pass på å importer disse fra _(...)/firebase-firestore.js_ i koden din (lim inn linja over etter `import { getFirestore,` i koden din).
+
+<hr />
+
 Fra datamodellering med relasjonsdatabaser (SQL) er du kanskje vant til at data organiseres over flere tabeller som har relasjoner til hverandre. Om man for eksempel har en database over hoteller, og vil registrere hotellrommene på hvert enkelt hotell, ville vi i SQL ha lagd en tabell for hoteller, og en tabell for hotellrom, og koblet disse sammen med en en-til-mange-relasjon.
 
 ![Databasemodell av database for hotell og hotellrom](/img/2022-02-04-organisering-av-data-i-cloud-firestore/Hotell_db_mod.svg)
@@ -77,4 +85,5 @@ for(i = 0; i < elevArr.length; i++){
 _(Mer stoff kommer)_
 
 Her kan du lære mer om organisering av data i Cloud Firestore og i NoSQL-databaser generelt:
+
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/v_hR4K4auoQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
