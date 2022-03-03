@@ -4,7 +4,8 @@ title: "Mer om spørringer og organisering av data i Cloud Firestore"
 date: 2022-02-10 14:30:00 +0100
 categories: database firebase
 ---
-_Denne artikkelen er under arbeid. Den vil oppdateres fortløpende med mer info._
+
+<hr />
 
 I denne leksjonen brukes følgende Firebase-funksjoner:
 
