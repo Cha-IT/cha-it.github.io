@@ -22,8 +22,8 @@ title: Cha-IT
 email: karda@trondelagfylke.no
 description: >- # this means to ignore newlines until "baseurl:"
   Guider og lærestoff i IT-emner for 1IM og 2IT, Charlottenlund vgs.
-  Om du finner denne siden, bruk gjerne innholdet i din egen undervisning!
-  Netstedet vedlikeholdes av Karl Arne Dalsaune.
+  Om du finner denne siden, bruk gjerne innholdet i din egen undervisning! Send gjerne tilbakemeldinger på stoffet på mail eller Twitter.
+  Innholdet produseres og vedlikeholdes av Karl Arne Dalsaune.
 domain: cha-it.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: https://cha-it.github.io  # the base hostname and protocol for your site, e.g. http://example.com
 baseurl:       # place folder name if the site is served in a subfolder
