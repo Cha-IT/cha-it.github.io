@@ -50,12 +50,22 @@ WHERE Fag.Fagnavn = "Utvikling";
 I Cloud Firestore, må vi lage flere atskilte spørringer, slik:
 ```javascript
 //Henter alle dokumenter fra samlingen Fag der fagnavn er Utvikling, og lagrer de i arrayen fagSporring
-const fagSporring = await getDocs(query(collection(db, "Fag"), where("Fagnavn", "==", "Utvikling")));
+const fagSporring = await getDocs(
+  query(
+    collection(db, "Fag"), 
+    where("Fagnavn", "==", "Utvikling")
+  )
+);
 //(I praksis vil spørringen returnere kun ett dokument, men det blir likevel lagret som en array med ett element)
 
 //Henter alle dokumenter fra samlingen Elev_har_Fag (dvs id, ElevID, FagID, år og karakter) der FagID er lik  
 //resultatet fra fagSporring, og lagrer de i arrayen elevHarFagSporring. 
-const elevHarFagSporring = await getDocs(query(collection(db, "Elev_har_Fag"), where("FagID", "==", fagSporring[0].id)));
+const elevHarFagSporring = await getDocs(
+  query(
+    collection(db, "Elev_har_Fag"), 
+    where("FagID", "==", fagSporring[0].id)
+  )
+);
 //Siden getDocs returnerer en array må vi angi at vi skal ha data fra element 0 i arrayen 
 //(arrayen har i dette tilfellet bare ett element).
 
@@ -67,23 +77,53 @@ const karakterArr = [];
 //Kjører en løkke som går gjennom alle dokumenter fra spørringen elevHarFagSporring.
 elevHarFagSporring.forEach((dokument) => {
   //Henter inn hver enkelt elevdokument og lagrer i arrayen elevArr. getDoc henter et dokument med en bestemt id. 
-  elevArr.push(await getDoc(doc(db, "Elev", dokument.data().ElevID)));
+  elevArr.push(
+    await getDoc(
+      doc(db, "Elev", dokument.data().ElevID)
+    )
+  );
   //Alternativt kunne dette vært formulert som en spørring, slik: 
   //elevArr.push(await getDocs(query(collection(db, "Elev"), where("__name__", "==", dokument.data.ElevID)));
   //Forskjellen er at getDocs returnerer en array, og elevArr vil da bli en nøstet array.
   
   //Henter karakteren til hver elev og lagrer i arrayen karakterArr. 
-  karakterArr.push(dokument.data().karakter);
+  karakterArr.push(
+    dokument.data().karakter
+  );
   //Denne arrayen får da parallelle verdier med ElevArr, altså vil karakterene komme i rekkefølge med riktig elev.
 });
 
 //Skriver ut fornavn og etternavn (fra elevArr) og karakter (fra karakterArr) til alle elever
 for(i = 0; i < elevArr.length; i++){
-  console.log(elevArr[i].data().fornavn, elevArr[i].data().etternavn, karakterArr[i];
+  console.log(
+    elevArr[i].data().fornavn, 
+    elevArr[i].data().etternavn, 
+    karakterArr[i]
+  );
 }
 ```
-_(Mer stoff kommer)_
 
+# Begrensninger på spørringer i Cloud Firestore
+Hvis du har brukt SQL før, vet du at i SQL kan du kombinere betingelser, sorterting, gruppering og mer for å få akkurat det resultatet du ønsker fra databasen. På grunn av måten data er organisert i Cloud Firestore, er det en del begrensninger på hvordan du kan utforme spørringer. Hvis du har en betingelse (`where()`), kan du ikke sortere (`orderBy()`) etter noe annet enn det parameteret du brukte i betingelsen.
+
+Eksempel:
+```javascript
+query(
+  collection(db, "elever"),
+  where("alder", "<", 18),
+  orderBy("etternavn")
+);
+```
+
+I dette eksempelet vil du få en feilmelding fordi du du ikke har brukt samme parameter i `where()` og `orderBy()`. Dette er fordi en slik spørring vil ta lengre tid å gjennomføre, og det vil skape mer trafikk til og fra databasen. Det er likevel mulig å gjennomføre en slik spørring ved å lage en sammensatt indeks (composite index) i Firebase-konsollen. Dette er det mulig å gjøre direkte fra feilmeldinga du får hvis du prøver å kjøre spørringa i eksempelet. Feilmeldinga vil inneholde en lenke til Firebase-konsollen som lar deg opprette akkurat den sammensatte indeksen du trenger, men du bør være forsiktig med å lage for mange, da du bare har mulighet til å lage 50 sammensatte indekser til hver database. Det er mer hensiktsmessig å sortere resultatet du får tilbake (som en array) enn at Firestore sorterer dette for deg.
+
+På samme måte vil du i utgangspunktet ikke kunne kjøre spørringer mot flere undersamlinger samtidig. I hotelleksempelet over vil du for eksempel ikke kunne søke etter ledige dobbeltrom fra flere hoteller samtidig. Dette kan også løses ved å lage en sammensatt indeks i Firebase-konsollen, eller du kan kjøre flere separate spørringer mot hvert hotell, og samle resultatene i en liste (array), som du kan sortere og søke i via ditt eget skript.
+
+# Mer informasjon
 Her kan du lære mer om organisering av data i Cloud Firestore og i NoSQL-databaser generelt:
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/v_hR4K4auoQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Her kan du lære mer om hvordan spørringer fungerer i Cloud Firestore:
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Ofux_4c94FI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
