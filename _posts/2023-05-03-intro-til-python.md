@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Intro til Python"
-date: 2022-02-10 14:30:00 +0100
-categories: database firebase
+date: 2023-05-03 12:00:00 +0100
+categories: programmering python
 ---
 
 # Hva er Python?
