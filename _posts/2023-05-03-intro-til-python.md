@@ -29,7 +29,33 @@ Her er noen av funksjonene og bruksområdene til Python:
 
 Dette er bare noen av bruksområdene til Python, og det er mange flere. Python er et allsidig språk som kan brukes til en rekke forskjellige oppgaver, og det er enkelt å lære og bruke for både nybegynnere og erfarne utviklere.
 
-# Kom i gang med Python i Visual Studio Code
+# Kom i gang med Python 
+Det er to ting du må gjøre før du kan begynne å programmere i Python på PC-en din.
+
+## 1: Installer Python på datamaskinen din
+
+### 1.1 Installere Python på Windows
+
+1. Gå til https://www.python.org/downloads/ i nettleseren din.
+2. Scroll ned til "Download for Windows" og klikk på den store gule knappen som sier "Download Python 3.x.x".
+3. I neste skjermbilde vil du se en oversikt over tilgjengelige nedlastingsalternativer. Velg den nyeste versjonen av Python 3.x.x (hvor x er det nyeste undernummeret) for ditt operativsystem (32-bit eller 64-bit).
+4. Når du har valgt riktig versjon for datamaskinen din, klikker du på linken for å laste ned installasjonsprogrammet.
+5. Når nedlastingen er fullført, åpner du filen du nettopp har lastet ned og kjører installasjonsprogrammet.
+6. Følg instruksjonene i installasjonsprogrammet for å fullføre installasjonen. Pass på å velge alternativet for å legge til Python til PATH-variabelen din, slik at du kan kjøre Python fra kommandolinjen.
+7. Når installasjonen er fullført, kan du åpne et kommandolinjevindu og skrive "python" for å starte Python-interpreteren og begynne å skrive kode.
+
+### 1.2 Installere Python på MacOS
+
+1. Åpne en nettleser og gå til https://www.python.org/downloads/.
+2. Klikk på knappen "Download Python" som tilsvarer den nyeste versjonen av Python for Mac.
+3. Velg "macOS installer" for å laste ned installasjonsfilen.
+4. Åpne installasjonsfilen og dobbeltklikk på "Python.mpkg"-filen for å starte installasjonen.
+5. Følg installasjonsveiledningen ved å godta lisensavtalen og velge ønsket installasjonsmappe.
+6. Vent til installasjonen er fullført.
+
+Når Python er installert, kan du åpne en terminal og skrive "python" for å starte Python-konsollen og begynne å skrive kode.
+
+## 2: Installer Python i Visual Studio Code
 
 Her er en kort guide for å komme i gang med Visual Studio Code og Python:
 
