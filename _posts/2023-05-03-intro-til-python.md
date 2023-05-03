@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Intro til Python"
+title: "Intro til programmering i Python"
 date: 2023-05-03 12:00:00 +0100
 categories: programmering python
 ---
