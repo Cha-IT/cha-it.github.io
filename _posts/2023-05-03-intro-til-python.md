@@ -6,6 +6,9 @@ categories: programmering python
 ---
 
 # Hva er Python?
+<hr />
+![Python-slange](/img/2023-05-03-intro-til-python/Python_Regius.jpeg)
+_Bilde: Sandro De Sousa, [CC BY 3.0](https://creativecommons.org/licenses/by/3.0), via Wikimedia Commons_
 
 Python er et høynivåspråk som ble utviklet på slutten av 80-tallet og er fortsatt en av de mest populære programmeringsspråkene i dag. Det er kjent for å være lett å lære, ha en ren og lesbar syntaks, og ha et bredt spekter av bruksområder.
 
@@ -30,10 +33,14 @@ Her er noen av funksjonene og bruksområdene til Python:
 Dette er bare noen av bruksområdene til Python, og det er mange flere. Python er et allsidig språk som kan brukes til en rekke forskjellige oppgaver, og det er enkelt å lære og bruke for både nybegynnere og erfarne utviklere.
 
 # Kom i gang med Python 
+<hr />
+![Python-logo](/img/2023-05-03-intro-til-python/Python_logo_01.svg)
+_Bilde: Dnu72, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0), via Wikimedia Commons_
+
 Det er to ting du må gjøre før du kan begynne å programmere i Python på PC-en din.
 
 ## 1: Installer Python på datamaskinen din
-
+<hr />
 ### 1.1 Installere Python på Windows
 
 1. Gå til https://www.python.org/downloads/ i nettleseren din.
@@ -56,7 +63,7 @@ Det er to ting du må gjøre før du kan begynne å programmere i Python på PC-
 Når Python er installert, kan du åpne en terminal og skrive "python" for å starte Python-konsollen og begynne å skrive kode.
 
 ## 2: Installer Python i Visual Studio Code
-
+<hr />
 Her er en kort guide for å komme i gang med Visual Studio Code og Python:
 
 1. Last ned og installer Visual Studio Code fra https://code.visualstudio.com/.
@@ -84,11 +91,14 @@ Visual Studio Code gir deg også tilgang til mange nyttige funksjoner for å utv
 
 
 # Grunnleggende begreper og konsepter i Python
-
+<hr />
 Her er noen grunnleggende konsepter i Python
 
 Variabler
 ----------
+![En eske med et spørsmålstegn på](/img/2023-05-03-intro-til-python/box.webp)
+_Bilde: Image by BedexpStock_
+
 En variabel er en plass i minnet som kan inneholde en verdi. I Python kan du definere en variabel ved å gi den et navn og sette en verdi til det navnet. For eksempel kan du skrive:
 ```python
 navn = "Ola Nordmann"
@@ -98,6 +108,9 @@ Her definerer vi to variabler: `navn` og `alder`. `navn` har en verdi av en stre
 
 Valgsetninger
 -------------
+![Illustrasjon av et valg mellom to alternativer](/img/2023-05-03-intro-til-python/Ifelselogic.png)
+_Bilde: Vihangvk at English Wikibooks, [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0), via Wikimedia Commons_
+
 Valgsetninger brukes til å utføre forskjellige handlinger avhengig av en betingelse. I Python kan du bruke `if`, `elif` og `else` for å lage en valgsetning. For eksempel kan du skrive:
 ```python
 alder = 30
@@ -112,6 +125,8 @@ Her sjekker vi alderen til en person og skriver ut en passende melding basert p�
 
 Løkker
 -------
+![To piler i sirkel](/img/2023-05-03-intro-til-python/loop.png)
+
 Løkker brukes til å gjenta en handling flere ganger. I Python kan du bruke `for`-løkker og `while`-løkker. For eksempel kan du skrive:
 ```python
 for i in range(1, 11):
@@ -132,6 +147,7 @@ Dette er bare en kort introduksjon til variabler, valgsetninger og løkker i Pyt
 
 Funksjoner
 -------
+![Puslespill med en brikke løftet ut](/img/2023-05-03-intro-til-python/Puzzle.jpeg)
 Funksjoner i Python brukes til å dele opp koden din i mindre biter som kan gjenbrukes flere steder i programmet. Du kan tenke på en funksjon som en ferdigskrevet bit med kode som utfører en bestemt oppgave, og som kan kalles fra andre steder i programmet når du trenger å utføre den oppgaven.
 
 For å lage en funksjon i Python bruker du nøkkelordet `def`, etterfulgt av funksjonsnavnet og parenteser, og så koden du vil kjøre i funksjonen. Hvis funksjonen skal returnere en verdi, bruker du nøkkelordet `return`.
@@ -154,6 +170,7 @@ Så, når vi kaller funksjonen med argumentene 2 og 3 (`sum = add_numbers(2, 3)`
 Dette er bare et veldig enkelt eksempel, men funksjoner kan være mye mer komplekse og ha flere argumenter og returverdier. De er nyttige når du vil skrive kode som skal kunne brukes flere ganger, og når du vil dele opp koden din i mindre, mer oversiktlige biter.
 
 ## Bruk av funksjoner i programmer
+<hr />
 
 Det er en god praksis å organisere koden som funksjoner. Her er et eksempel på et program der hele koden er organisert i funksjoner.
 
@@ -179,6 +196,7 @@ I `main`-funksjonen ber vi brukeren om å oppgi alderen sin ved hjelp av `input`
 Til slutt sjekker vi om modulen kjøres direkte ved hjelp av `if __name__ == '__main__':`, og hvis den gjør det, kaller vi `main`-funksjonen. Dette gjør det mulig å importere modulen i andre Python-skript uten at `main`-funksjonen kjøres automatisk.
 
 ## main-funksjonen
+<hr />
 
 `main`-funksjonen er vanligvis en funksjon som brukes til å starte programmet eller modulen. Det er vanlig å ha en `main`-funksjon i et Python-program for å organisere koden på en oversiktlig måte og gjøre det enklere å gjenbruke koden senere.
 
