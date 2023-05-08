@@ -4,6 +4,7 @@ title: "Intro til programmering i Python"
 date: 2023-05-03 12:00:00 +0100
 categories: programmering python
 ---
+>_Teksten i denne artikkelen er generert i samtale med ChatGPT, og redigert av Karl Arne Dalsaune._
 
 ![Python-slange](/img/2023-05-03-intro-til-python/Python_Regius.jpeg)
 
